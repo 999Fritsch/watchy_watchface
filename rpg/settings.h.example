@@ -1,0 +1,38 @@
+#pragma once
+
+// ── WiFi ──────────────────────────────────────────────────────────────────────
+// Add as many networks as you like — the watch tries them in order.
+struct WifiCred { const char* ssid; const char* pass; };
+const WifiCred WIFI_NETWORKS[] = {
+    { "HomeSSID",    "homepassword"    },
+    { "WorkSSID",    "workpassword"    },
+    { "PhoneHotspot","hotspotpassword" },
+};
+
+// ── Weather ───────────────────────────────────────────────────────────────────
+// Free API key: https://openweathermap.org/api
+// Default lat/lon used on first boot before IP geolocation runs.
+// Find your coords: https://www.latlong.net/
+#define DEFAULT_LAT              "50.7374"   // your city latitude
+#define DEFAULT_LON              "7.0982"    // your city longitude
+#define OPENWEATHERMAP_APIKEY    "your_api_key_here"
+#define OPENWEATHERMAP_URL       "http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&lang={lang}&units={units}&appid={apiKey}"
+#define WEATHER_UNIT             "metric"    // "metric" = Celsius, "imperial" = Fahrenheit
+#define WEATHER_LANG             "en"
+#define WEATHER_UPDATE_INTERVAL  30          // minutes, must be > 5
+
+// ── NTP / Time ────────────────────────────────────────────────────────────────
+// Initial GMT offset in seconds — auto-updated from OWM timezone after first fetch.
+//   UTC+1: 3600   UTC+2: 7200   UTC-5: -18000
+#define NTP_SERVER               "pool.ntp.org"
+#define GMT_OFFSET_SEC           3600
+
+// ── Misc ──────────────────────────────────────────────────────────────────────
+#define VIBRATE_OCLOCK           false
+
+// ── Player ────────────────────────────────────────────────────────────────────
+#define PLAYER_NAME              "PLAYER"
+#define STEPS_GOAL               8000        // daily step target for XP bar and streak
+
+// ── Hardware ──────────────────────────────────────────────────────────────────
+#define CHARGE_PIN               10          // v3.0 charge indicator GPIO, active LOW
