@@ -13,8 +13,10 @@ arduino-cli compile --upload -p /dev/ttyACM0 \
   rpg/
 ```
 
-Board settings: **ESP32S3 Dev Module**, Flash 8MB (`FlashSize=8M`), Partition 8MB with SPIFFS (`PartitionScheme=default_8MB`), Watchy >= 1.4.11, arduino-esp32 >= 3.0.2.
+Board settings: **ESP32S3 Dev Module**, Flash 8MB (`FlashSize=8M`), Partition 8MB with SPIFFS (`PartitionScheme=default_8MB`), Watchy >= 1.4.11, arduino-esp32 **exactly 2.0.17**.
 Port: `/dev/ttyACM0` (ESP32-S3 native USB CDC, not UART → not ttyUSB0).
+
+> **WARNING: Do NOT use arduino-esp32 v3.x.x.** Deep sleep is broken in v3.x, causing ~20h battery life instead of days. Pin to `esp32` platform version **2.0.17** in Arduino IDE / arduino-cli until upstream fixes this.
 
 No linter, no test suite — verify by flashing.
 

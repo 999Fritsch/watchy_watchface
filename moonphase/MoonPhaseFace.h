@@ -80,12 +80,12 @@ private:
         // terminator moves right→left as phase grows toward full
         int x_term = constrain((int)(cx + cos_a * chord), x_left, x_right);
         if (x_term > x_left)
-          display.drawFastHLine(x_left, y, x_term - x_left, GxEPD_BLACK);
+          display.drawFastHLine(x_left, y, x_term - x_left + 1, GxEPD_BLACK);
       } else {
         // terminator moves left→right as phase grows toward next new
         int x_term = constrain((int)(cx - cos_a * chord), x_left, x_right);
         if (x_term < x_right)
-          display.drawFastHLine(x_term, y, x_right - x_term, GxEPD_BLACK);
+          display.drawFastHLine(x_term, y, x_right - x_term + 1, GxEPD_BLACK);
       }
     }
   }
