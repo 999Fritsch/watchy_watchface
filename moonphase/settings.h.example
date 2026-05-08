@@ -9,30 +9,25 @@ const WifiCred WIFI_NETWORKS[] = {
     { "PhoneHotspot","hotspotpassword" },
 };
 
-// ── Weather ───────────────────────────────────────────────────────────────────
+// ── Weather / Timezone ────────────────────────────────────────────────────────
+// OWM is fetched once per day solely to obtain the DST-correct UTC offset.
+// No weather data is displayed.
 // Free API key: https://openweathermap.org/api
-// Default lat/lon used on first boot before IP geolocation runs.
 // Find your coords: https://www.latlong.net/
 #define DEFAULT_LAT              "50.7374"   // your city latitude
 #define DEFAULT_LON              "7.0982"    // your city longitude
 #define OPENWEATHERMAP_APIKEY    "your_api_key_here"
 #define OPENWEATHERMAP_URL       "http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&lang={lang}&units={units}&appid={apiKey}"
-#define WEATHER_UNIT             "metric"    // "metric" = Celsius, "imperial" = Fahrenheit
+#define WEATHER_UNIT             "metric"
 #define WEATHER_LANG             "en"
-#define WEATHER_UPDATE_INTERVAL  30          // minutes, must be > 5
+#define WEATHER_UPDATE_INTERVAL  120         // every 2h — int8_t max is 127; sole use is DST/timezone update
 
 // ── NTP / Time ────────────────────────────────────────────────────────────────
 // Initial GMT offset in seconds — auto-updated from OWM timezone after first fetch.
-//   UTC+1: 3600   UTC+2: 7200   UTC-5: -18000
+//   UTC+1: 3600 (CET)   UTC+2: 7200 (CEST)
 #define NTP_SERVER               "pool.ntp.org"
 #define GMT_OFFSET_SEC           3600
 
 // ── Misc ──────────────────────────────────────────────────────────────────────
 #define VIBRATE_OCLOCK           false
-
-// ── Player ────────────────────────────────────────────────────────────────────
-#define PLAYER_NAME              "PLAYER"
-#define STEPS_GOAL               8000        // daily step target for XP bar and streak
-
-// ── Hardware ──────────────────────────────────────────────────────────────────
 #define USB_DETECT_PIN           21          // v3.0 USB presence GPIO, active HIGH

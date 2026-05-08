@@ -7,11 +7,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 No build system — Arduino IDE or arduino-cli only.
 
 ```bash
-# Upload via arduino-cli (find port first: ls /dev/tty*)
-arduino-cli upload -p /dev/ttyUSB0 --fqbn esp32:esp32:esp32s3 rpg/
+# Compile and upload (watch appears as /dev/ttyACM0 via native USB)
+arduino-cli compile --upload -p /dev/ttyACM0 \
+  --fqbn esp32:esp32:esp32s3:FlashSize=8M,PartitionScheme=default_8MB \
+  rpg/
 ```
 
-Board settings: **ESP32S3 Dev Module**, Flash 8MB, Partition 8MB with SPIFFS, Watchy >= 1.4.11, arduino-esp32 >= 3.0.2.
+Board settings: **ESP32S3 Dev Module**, Flash 8MB (`FlashSize=8M`), Partition 8MB with SPIFFS (`PartitionScheme=default_8MB`), Watchy >= 1.4.11, arduino-esp32 >= 3.0.2.
+Port: `/dev/ttyACM0` (ESP32-S3 native USB CDC, not UART → not ttyUSB0).
 
 No linter, no test suite — verify by flashing.
 

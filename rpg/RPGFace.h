@@ -45,11 +45,11 @@ public:
     drawDash(48);
     drawTime();       // y=53..97
     drawDate();       // y=98..113
-    drawDash(118);
-    drawWeatherRow(); // y=123..135
-    drawStatusRow();  // y=136..150
-    drawDash(155);
-    drawBottomRow();  // y=160..172
+    drawDash(132);
+    drawWeatherRow(); // y=137..149
+    drawStatusRow();  // y=150..164
+    drawDash(169);
+    drawBottomRow();  // y=174..186
   }
 
 private:
@@ -146,20 +146,21 @@ private:
   }
 
   // ── Charge tracking ──────────────────────────────────────────────────────
-  // Saves a timestamp to NVS whenever the watch transitions from
-  // charging → not charging (i.e. the moment you unplug).
+  // Saves a timestamp to NVS when USB physically disconnected.
+  // Uses USB_DETECT_PIN (GPIO21, active HIGH) not CHRG_STATUS_PIN (GPIO10),
+  // because GPIO10 goes HIGH on full charge even when cable still attached.
 
   void trackCharge() {
-    pinMode(CHARGE_PIN, INPUT);
-    bool charging = !digitalRead(CHARGE_PIN);  // active LOW
+    pinMode(USB_DETECT_PIN, INPUT);
+    bool connected = digitalRead(USB_DETECT_PIN);  // active HIGH
 
     Preferences p;
     p.begin("rpg", false);
-    bool wasCharging = p.getBool("chg", false);
-    if (wasCharging && !charging) {
+    bool wasConnected = p.getBool("chg", false);
+    if (wasConnected && !connected) {
       p.putULong("chgEnd", approxUnix());
     }
-    p.putBool("chg", charging);
+    p.putBool("chg", connected);
     p.end();
   }
 
@@ -307,7 +308,7 @@ private:
     snprintf(buf, sizeof(buf), "%-8s    %3dC",
       biomeCode().c_str(),
       (int)weather.temperature);
-    display.setCursor(4, 133);
+    display.setCursor(4, 147);
     display.print(buf);
   }
 
@@ -325,7 +326,7 @@ private:
     else if (pct >= 95)                status = "[+] FULLY CHARGED";
     else                               status = "[ ] ALL CLEAR";
 
-    display.setCursor(4, 150);
+    display.setCursor(4, 164);
     display.print(status);
   }
 
@@ -333,7 +334,7 @@ private:
     display.setFont(&FreeMono9pt7b);
 
     // Left: WiFi status (proxied via weather.external — true = API reached this cycle)
-    display.setCursor(4, 168);
+    display.setCursor(4, 182);
     display.print(weather.external ? "NET:OK" : "NET:--");
 
     // Right: uptime since last unplug
@@ -347,7 +348,7 @@ private:
       unsigned long now_ = approxUnix();
       if (now_ > chgEnd) uptime = "UP:" + fmtUptime(now_ - chgEnd);
     }
-    display.setCursor(rightX(uptime), 168);
+    display.setCursor(rightX(uptime), 182);
     display.print(uptime);
   }
 };

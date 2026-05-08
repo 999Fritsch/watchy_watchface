@@ -1,6 +1,5 @@
 # Credentials — copy settings.h.example → settings.h and fill in your values
-rpg/settings.h
-sketch_may4a/settings.h
+*/settings.h
 
 # Arduino build artifacts
 build/
@@ -14,3 +13,5 @@ build/
 
 # Claude Code internal
 .claude/
+
+.grill/

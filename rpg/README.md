@@ -74,5 +74,5 @@ Required fields in `settings.h`:
 ## Hardware notes
 
 - Tested on **Watchy v3.0** (SQFMI-WATCHY-10, ESP32-S3)
-- `CHARGE_PIN 10` — active LOW charge indicator, v3.0 specific
+- `USB_DETECT_PIN 21` — active HIGH USB presence pin, v3.0; used for uptime tracking (GPIO10 `CHRG_STATUS_PIN` is unsuitable — it de-asserts on full charge, not unplug)
 - Step counter uses BMA423 accelerometer via `sensor.getCounter()` (cumulative, not auto-reset)
